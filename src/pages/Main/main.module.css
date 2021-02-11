@@ -1,0 +1,32 @@
+.container {
+  width: 1040px;
+  margin: 0 auto;
+}
+
+.header {
+}
+
+.headerImg {
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+}
+
+.section {
+  background: #e5e5e5;
+}
+
+.sectionSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 36px;
+  line-height: 52px;
+  margin-bottom: 40px;
+  display: block;
+  text-align: center;
+}

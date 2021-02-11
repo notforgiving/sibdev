@@ -1,0 +1,26 @@
+.listWrapper {
+  width: 100%;
+  margin-top: 40px;
+}
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.listViewBtn {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.listWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.listList {
+  display: flex;
+  flex-direction: column;
+}

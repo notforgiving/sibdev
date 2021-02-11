@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Roboto;
+}
+
+.login {
+  padding: 40px 88px 60px 88px;
+  background: #ffffff;
+  border: 1px solid rgba(39, 39, 39, 0.1);
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.loginFormWrapper {
+  width: 333px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginLogo {
+  margin-bottom: 32px;
+}
+.loginTitle {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.loginForm {
+  width: 100%;
+}
+
+.loginSubmit {
+  text-align: center;
+}

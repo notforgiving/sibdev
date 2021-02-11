@@ -1,0 +1,24 @@
+.video {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  max-width: 245px;
+}
+.video:nth-of-type(4n) {
+  margin-right: 0;
+}
+
+.videoList {
+  display: flex;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.videoImg {
+  width: 245px;
+  height: 163px;
+}
+
+.videoList .videoImg {
+  margin-right: 20px;
+}
