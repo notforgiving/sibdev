@@ -3,13 +3,8 @@
   margin: 0 auto;
 }
 
-.header {
-}
-
-.headerImg {
-  height: 48px;
-  width: 48px;
-  cursor: pointer;
+body {
+  background: #e5e5e5;
 }
 
 .section {
@@ -23,10 +18,28 @@
   flex-direction: column;
 }
 
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mark {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 18%;
+  transform: translateY(-50%);
+}
+
 .title {
   font-size: 36px;
   line-height: 52px;
   margin-bottom: 40px;
   display: block;
   text-align: center;
+  padding-top: 10%;
 }

@@ -1,0 +1,17 @@
+.exitBtn {
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  border: none;
+}
+
+.header {
+  background-color: #fff;
+}
+
+
+.headerImg {
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+}

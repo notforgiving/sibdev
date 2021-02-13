@@ -1,0 +1,12 @@
+.saveQuantity {
+  display: flex;
+  align-items: center;
+}
+
+.saveQuantityValue {
+  width: 20%;
+}
+
+.saveRange {
+  margin-right: 10px;
+}

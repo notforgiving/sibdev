@@ -9,7 +9,6 @@ interface IVideo{
 }
 
 function Video({data,view}:IVideo) {
-  console.log(data)
   return (
     <div className={view==='wrap'?style.video:style.videoList}>
       <img className={style.videoImg} src={data.snippet.thumbnails.high.url} alt="Logo"/>

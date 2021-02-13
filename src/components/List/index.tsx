@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BarsOutlined } from "@ant-design/icons";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { Typography } from "antd";
+import {useSelector} from 'react-redux'
 
 import Video from "../Video";
 
@@ -11,6 +12,7 @@ const { Text } = Typography;
 
 function List({ video, request }: any) {
   const [view, setVeiw] = useState("wrap");
+  const {total}: any  = useSelector(state=>state)
 
   const handleList = () => {
     setVeiw("list");
@@ -23,7 +25,7 @@ function List({ video, request }: any) {
   return (
     <div className={style.listWrapper}>
       <div className={style.listHeader}>
-        <Text>Видео по запросу "{request}"</Text>
+        <Text>Видео по запросу "{request}" {total}</Text>
         <div>
           <button className={style.listViewBtn} onClick={handleList}>
             <BarsOutlined

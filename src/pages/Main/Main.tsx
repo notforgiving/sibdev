@@ -1,67 +1,74 @@
 import classNames from "classnames";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Menu } from "antd";
-import Mark from "./../../components/Mark";
+import { HeartOutlined } from "@ant-design/icons";
 import List from "../../components/List";
 import Search from "antd/lib/input/Search";
-import Logo from "./../../assets/img/logo.svg";
-
+import Hedaer from "./../../components/Header";
 import style from "./main.module.css";
 
 import { loadVideo } from "./../../redux/actions/videoAction";
-import { iVideoItem, iVideoId } from "./../../typing/item";
+import Save from "../../components/Save";
 
 function Main() {
   const [request, setRequest] = useState("");
-  const [selected, setSelected] = useState("search");
+  const [selected, setSelected] = useState("");
   const dispatch = useDispatch();
   const { video }: any = useSelector((state) => state);
+  const [save, setSave] = useState(false);
 
-  const handleChangeRequest = (e: any) => {
-    setRequest(e.target.value);
-  };
-
-  const handlePostRequest = () => {
-    if (request != "") {
-      dispatch(loadVideo(request));
+  const handlePostRequest = (value: string) => {
+    if (value != "") {
+      dispatch(loadVideo(value));
     }
   };
 
+  const handleSaveModal = () => {
+    setSave(!save);
+  };
+
+  const handleChangeSearch = (e: any) => {
+    setSelected(e.target.value);
+  };
   return (
     <>
-      <header className={style.header}>
-        <Menu
-          className={style.container}
-          selectedKeys={[selected]}
-          mode="horizontal"
-        >
-          <img key="logo" className={style.headerImg} src={Logo} alt="Logo" />
-          <Menu.Item key="search">Поиск</Menu.Item>
-          <Menu.Item key="marks">Избранное</Menu.Item>
-          <Menu.Item key="exit">
-            <a>Выйти</a>
-          </Menu.Item>
-        </Menu>
-      </header>
+      <Hedaer />
       <section
         className={classNames(`${style.section}`, `${style.sectionSearch}`)}
       >
         <div className={style.container}>
           <span className={style.title}>Поиск видео</span>
-          <Search
-            placeholder="Что хотите посмотреть?"
-            enterButton="Найти"
-            onChange={handleChangeRequest}
-            size="large"
-            suffix={Mark}
-            onSearch={handlePostRequest}
-          />
-          {video.length>0 ? <List video={video} request={request}/> : ""}
+          <div className={style.search}>
+            <Search
+              placeholder="Что хотите посмотреть?"
+              enterButton="Найти"
+              size="large"
+              onSearch={handlePostRequest}
+              onChange={handleChangeSearch}
+            />
+            {selected === "" ? (
+              ""
+            ) : (
+              <button onClick={handleSaveModal} className={style.mark}>
+                <HeartOutlined
+                  style={{
+                    fontSize: 16,
+                    color: "#1890ff",
+                  }}
+                />
+              </button>
+            )}
+          </div>
+          {video.length > 0 ? <List video={video} request={request} /> : ""}
         </div>
       </section>
+      {save ? (
+        <Save purpuse="create" visable={save} close={handleSaveModal} data={selected} />
+      ) : (
+        ""
+      )}
     </>
   );
 }
