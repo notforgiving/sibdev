@@ -61,8 +61,8 @@ function* workerGetReqsts() {
 
 function* workerUpdReq(data: any) {
   const response: Array<any> = yield call(fetchUpd, data);
-  const videos: Array<any> = yield call(fetchGetReqsts);
-  yield put(setReqsts(videos));
+  const video: Array<any> = yield call(fetchGetReqsts);
+  yield put(setReqsts(video));
 }
 
 export function* watchSaveReq() {

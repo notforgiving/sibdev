@@ -16,7 +16,6 @@ function fetchVideoByREquest(data:any) {
 }
 
 function* workerRunRequest(data:any) {
-  console.log(data.payload)
   const videos:iVideoTotal = yield call(fetchVideoByREquest,data.payload);
   yield put(getVideo(videos.items));
   yield put(getTotalQuantity(videos.pageInfo.totalResults));

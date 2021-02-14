@@ -2,6 +2,8 @@ export enum actionsForVideo {
   LOAD_VIDEO = "LOAD_VIDEO",
   GET_VIDEO = "GET_VIDEO",
   GET_QUANTITY = "GET_QUANTITY",
+  GET_VIEWCOUNT = "GET_VIEWCOUNT",
+  SET_VIEWCOUNT = "SET_VIEWCOUNT",
 }
 
 export const getVideo = (data:any):any => ({
@@ -20,3 +22,13 @@ export const loadVideo = (request:string) => {
     request
   };
 };
+
+export const setViewCount = (values:any):any => ({
+  type: actionsForVideo.SET_VIEWCOUNT,
+  payload: values
+});
+
+export const getViewCount = (values:any):any => ({
+  type: actionsForVideo.GET_VIEWCOUNT,
+  payload: values
+});

@@ -2,7 +2,7 @@ import { Modal, Button, Form, Input, Select } from "antd";
 import style from "./style.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveReq, upsReqsts } from "../../redux/actions/reqActions";
+import { saveReq, upsReqsts,getReqsts } from "../../redux/actions/reqActions";
 
 const { Option } = Select;
 

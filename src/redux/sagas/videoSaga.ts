@@ -1,7 +1,7 @@
 import { put, call } from "redux-saga/effects";
 import * as Eff from 'redux-saga/effects'
 import {actionsForVideo} from './../actions/videoAction'
-import {getVideo,getTotalQuantity} from './../actions/videoAction'
+import {getVideo,getTotalQuantity,setViewCount} from './../actions/videoAction'
 import {iVideoTotal} from './../../typing/item'
 import axios from "axios";
 
@@ -16,12 +16,17 @@ function fetchVideo(data:any) {
   .then((response) => response.data)
 }
 
-function fetchQuantity(id:string){
+function fetchGetViewCount(values:any){
   return axios
   .get(
-    `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=AIzaSyCdKJIX-gDn0ntEbtEbc4iTObajiBz2IHQ&part=statistics`
+    `https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=${values.payload}&key=AIzaSyCdKJIX-gDn0ntEbtEbc4iTObajiBz2IHQ`
   )
   .then((response) => response.data)
+}
+
+function* workerGetViewCount(values:any) {
+  const quantitys:Array<any> = yield call(fetchGetViewCount,values);
+  yield put(setViewCount(quantitys));
 }
 
 function* workerLoadVideo(data:any) {
@@ -33,3 +38,8 @@ function* workerLoadVideo(data:any) {
 export function* watchLoadVideo (){
   yield takeEvery(actionsForVideo.LOAD_VIDEO, workerLoadVideo);
 }
+
+export function* watchGetViewCount (){
+  yield takeEvery(actionsForVideo.GET_VIEWCOUNT, workerGetViewCount);
+}
+

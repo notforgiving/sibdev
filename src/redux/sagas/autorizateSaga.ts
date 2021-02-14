@@ -18,12 +18,15 @@ function fetchAuth(userData: any) {
 }
 
 async function auth() {
-  if(localStorage.getItem('token')!="null"){
-    return await axios.get(`http://localhost:5000/api/auth/auth`,
-    {headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
-  }
-  else{
-    return false
+  if (
+    localStorage.getItem("token") != "null" &&
+    localStorage.getItem("token") != null
+  ) {
+    return await axios.get(`http://localhost:5000/api/auth/auth`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+  } else {
+    return false;
   }
 }
 
@@ -33,7 +36,7 @@ function* workerGetAuth(userData: any) {
 }
 
 function* workerSetAuth() {
-  const response: Array<any>|boolean = yield call(auth);
+  const response: Array<any> | boolean = yield call(auth);
   yield put(setUser(response));
 }
 

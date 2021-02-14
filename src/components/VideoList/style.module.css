@@ -1,0 +1,9 @@
+.listWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.listList {
+  display: flex;
+  flex-direction: column;
+}

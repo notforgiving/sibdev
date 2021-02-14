@@ -76,7 +76,7 @@ function Main(props: any) {
               </button>
             )}
           </div>
-          {video.length > 0 ? <List video={video} request={request} /> : ""}
+          {video.length > 0 ? <List video={video} request={selected} /> : ""}
         </div>
       </section>
       {save ? (

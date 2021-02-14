@@ -7,7 +7,8 @@ export interface iVideoItem{
   kind: string,
   etag: string,
   id: iVideoId,
-  snippet: any
+  snippet: any,
+  viewCount:string
 }
 
 export interface iVideoTotal{

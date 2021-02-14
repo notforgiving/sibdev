@@ -1,5 +1,5 @@
 .video {
-  margin-right: 20px;
+  margin-right: 10px;
   margin-bottom: 20px;
   cursor: pointer;
   max-width: 245px;
@@ -17,6 +17,20 @@
 .videoImg {
   width: 245px;
   height: 163px;
+  margin-bottom: 8px;
+}
+
+.videoDescription {
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(23, 23, 25, 0.3);
+}
+
+.videoName {
+  color: black;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
 
 .videoList .videoImg {
