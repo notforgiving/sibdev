@@ -3,22 +3,27 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { HeartOutlined } from "@ant-design/icons";
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import List from "../../components/List";
 import Search from "antd/lib/input/Search";
 import Hedaer from "./../../components/Header";
 import style from "./main.module.css";
 
 import { loadVideo } from "./../../redux/actions/videoAction";
+import {saveRequest} from './../../redux/actions/runRequest'
 import Save from "../../components/Save";
 
-function Main() {
-  const [request, setRequest] = useState("");
-  const [selected, setSelected] = useState("");
+function Main(props: any) {
+  const { video, searchData }: any = useSelector((state) => state);
+  const [request, setRequest] = useState(
+    searchData.text != "" ? searchData.text : ""
+  );
+  const [selected, setSelected] = useState(
+    searchData.text != "" ? searchData.text : ""
+  );
   const dispatch = useDispatch();
-  const { video }: any = useSelector((state) => state);
-  const [save, setSave] = useState(false);
 
+  const [save, setSave] = useState(false);
   const handlePostRequest = (value: string) => {
     if (value != "") {
       dispatch(loadVideo(value));
@@ -47,17 +52,27 @@ function Main() {
               size="large"
               onSearch={handlePostRequest}
               onChange={handleChangeSearch}
+              value={selected}
             />
             {selected === "" ? (
               ""
             ) : (
               <button onClick={handleSaveModal} className={style.mark}>
-                <HeartOutlined
-                  style={{
-                    fontSize: 16,
-                    color: "#1890ff",
-                  }}
-                />
+                {searchData.text != "" ? (
+                  <HeartFilled
+                    style={{
+                      fontSize: 16,
+                      color: "#1890ff",
+                    }}
+                  />
+                ) : (
+                  <HeartOutlined
+                    style={{
+                      fontSize: 16,
+                      color: "#1890ff",
+                    }}
+                  />
+                )}
               </button>
             )}
           </div>
@@ -65,7 +80,12 @@ function Main() {
         </div>
       </section>
       {save ? (
-        <Save purpuse="create" visable={save} close={handleSaveModal} data={selected} />
+        <Save
+          purpuse={searchData.text!=''?"update":"create"}
+          visable={save}
+          close={handleSaveModal}
+          data={searchData}
+        />
       ) : (
         ""
       )}

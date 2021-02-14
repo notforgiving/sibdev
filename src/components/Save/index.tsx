@@ -20,11 +20,10 @@ function Save({ visable, close, data, purpuse }: ISaveProp) {
     purpuse == "create" ? 0 : data.value
   );
   const dispatch = useDispatch();
-  const [name, setName] = useState(purpuse == "create" ? "" : data.name);
+  const [name, setName] = useState(purpuse === "create" ? "" : data.name);
   const [sort, setSort] = useState(
     purpuse == "create" ? "Без сортировки" : `${data.sort}`
   );
-
   const handleChangeVisable = () => {
     setDisplay(!visable);
     close();

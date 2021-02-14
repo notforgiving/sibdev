@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import Save from "./../Save";
+import { NavLink, Link } from "react-router-dom";
+import {saveRequest} from './../../redux/actions/runRequest'
+import { useDispatch } from "react-redux";
 
 interface IrequestProp {
   name: string;
@@ -15,12 +18,13 @@ interface IrequestProp {
 function Request({ className, dataReq }: any) {
   const [click, setClick] = useState(false);
   const [change, setChange] = useState(false);
-
+  const dispatch = useDispatch()
+  
   const handleClick = () => {
     setClick(!click);
   };
 
-  const handleChangeParam = () => {
+ const handleChangeParam = () => {
     setChange(!change);
   };
 
@@ -29,7 +33,9 @@ function Request({ className, dataReq }: any) {
       {dataReq.text}
       {click ? (
         <div>
-          <Button>Выполнить</Button>{" "}
+          <Link to="/">
+            <Button onClick={()=>{dispatch(saveRequest(dataReq))}}>Выполнить</Button>
+          </Link>
           <Button type="link" danger onClick={handleChangeParam}>
             Изменить
           </Button>
@@ -38,7 +44,12 @@ function Request({ className, dataReq }: any) {
         ""
       )}
       {change ? (
-        <Save purpuse = "update" visable={change} close={handleChangeParam} data={dataReq} />
+        <Save
+          purpuse="update"
+          visable={change}
+          close={handleChangeParam}
+          data={dataReq}
+        />
       ) : (
         ""
       )}

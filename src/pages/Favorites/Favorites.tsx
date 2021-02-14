@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 function Favorites() {
   const dispatch = useDispatch();
   const { favorites }: any = useSelector((state) => state);
-  console.log(favorites);
 
   useEffect(() => {
     dispatch(getReqsts());
