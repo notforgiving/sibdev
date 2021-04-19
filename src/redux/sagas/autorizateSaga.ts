@@ -19,9 +19,10 @@ function fetchAuth(userData: any) {
 
 async function auth() {
   if (
-    localStorage.getItem("token") != "null" &&
+    localStorage.getItem("token") != "undefined" &&
     localStorage.getItem("token") != null
   ) {
+    console.log(localStorage.getItem("token"),'localStorage.getItem("token")')
     return await axios.get(`http://localhost:5000/api/auth/auth`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });

@@ -14,7 +14,10 @@ app.use("/api/req", saveRouter)
 
 const start = async () => {
     try {
-        await mongoose.connect(config.get("dbUrl"))
+        await mongoose.connect(config.get("dbUrl"),{
+            useUnifiedTopology: true,
+            useNewUrlParser: true
+        })
 
         app.listen(PORT, () => {
             console.log('Server started on port ', PORT)
