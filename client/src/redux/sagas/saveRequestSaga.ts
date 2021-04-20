@@ -8,7 +8,7 @@ function fetchSave(save: any) {
   const { name, quantity, sort, data } = save.data;
   return axios
     .post(
-      "http://localhost:5000/api/req/save",
+      "https://stormy-earth-24857.herokuapp.com/api/req/save",
       {
         text: data,
         name,
@@ -24,7 +24,7 @@ function fetchSave(save: any) {
 function fetchGetReqsts() {
   return axios
     .get(
-      "http://localhost:5000/api/req/get",
+      "https://stormy-earth-24857.herokuapp.com/api/req/get",
       { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
     )
     .then((response) => response.data)
@@ -36,7 +36,7 @@ function fetchUpd(save: any) {
 
   return axios
     .post(
-      "http://localhost:5000/api/req/change",
+      "https://stormy-earth-24857.herokuapp.com/api/req/change",
       {
         text: text,
         name,

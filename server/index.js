@@ -4,10 +4,10 @@ const config = require("config")
 const authRouter = require("./routes/auth.routes")
 const saveRouter = require("./routes/request.routes")
 const app = express()
-const PORT = config.get('serverPort')
+const PORT = process.env.PORT || config.get('serverPort')
 const cors = require("cors")
 
-app.use(cors())
+app.use(cors());
 app.use(express.json())
 app.use("/api/auth", authRouter)
 app.use("/api/req", saveRouter)

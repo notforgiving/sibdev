@@ -9,7 +9,7 @@ function fetchAuth(userData: any) {
   const login = userData.data.login;
   const password = userData.data.password;
   return axios
-    .post(`http://localhost:5000/api/auth/login`, {
+    .post(`https://stormy-earth-24857.herokuapp.com/api/auth/login`, {
       login,
       password,
     })
@@ -21,7 +21,7 @@ function fetchRegistr(userData: any) {
   const login = userData.data.login;
   const password = userData.data.password;
   return axios
-    .post(`http://localhost:5000/api/auth/registration`, {
+    .post(`https://stormy-earth-24857.herokuapp.com/api/auth/registration`, {
       login,
       password,
     })
@@ -34,7 +34,7 @@ async function auth() {
     localStorage.getItem("token") != "undefined" &&
     localStorage.getItem("token") != null
   ) {
-    return await axios.get(`http://localhost:5000/api/auth/auth`, {
+    return await axios.get(`https://stormy-earth-24857.herokuapp.com/api/auth/auth`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
   } else {
