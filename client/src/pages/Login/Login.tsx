@@ -35,7 +35,7 @@ function LoginPage() {
       <div className={styles.login}>
         <div className={styles.loginFormWrapper}>
           <img className={styles.loginLogo} src={Logo} alt="Логотип" />
-          <h1 className={styles.loginTitle}>Вход</h1>
+          <h1 className={styles.loginTitle}>Вход/регистрация</h1>
           <Form className={styles.loginForm} layout="vertical" form={form}>
             <Form.Item label="Логин/E-mail">
               <Input onChange={handleChangeLogin} required />
