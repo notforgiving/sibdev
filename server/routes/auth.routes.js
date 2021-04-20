@@ -10,7 +10,7 @@ const authMiddleware = require("./../middleware/authmiddleware");
 router.post(
   "/registration",
   [
-    check("login", "Uncorrect login").isLength({ min: 3, max: 12 }),
+    check("login", "Uncorrect login").isLength({ min: 3}),
     check(
       "password",
       "Password must be longer than 3 and shorter than 12"

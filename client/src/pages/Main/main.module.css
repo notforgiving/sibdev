@@ -7,18 +7,28 @@ body {
   background: #e5e5e5;
 }
 
-.section {
+.body {
   background: #e5e5e5;
 }
 
-.sectionSearch {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.search {
+  position: relative;
 }
 
-.search {
+.section {
+  background: #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sectionSearch {
+  height: auto;
+}
+
+.sectionSearch .search {
   position: relative;
   display: flex;
   align-items: center;

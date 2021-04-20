@@ -1,13 +1,16 @@
+import { useEffect } from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { authentification } from "./redux/actions/autorizateAcrion";
+
+import Main from "./pages/Main/Main";
 import LoginPage from "./pages/Login/Login";
+import Favorites from "./pages/Favorites/Favorites";
+
 import style from "./generalStyle.module.css";
 import "./theme.css";
 import "antd/dist/antd.css";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { authentification } from "./redux/actions/autorizateAcrion";
-import Main from "./pages/Main/Main";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Favorites from "./pages/Favorites/Favorites";
 
 function App() {
   const dispatch = useDispatch();

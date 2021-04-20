@@ -1,5 +1,6 @@
 export enum actionsForAutorizate {
   GET_AUTH = "GET_AUTH",
+  GET_REGISTR = "GET_REGISTR",
   LOG_IN = "LOG_IN",
   LOG_OUT = "LOG_OUT",
   AUTH = "AUTH",
@@ -8,6 +9,11 @@ export enum actionsForAutorizate {
 
 export const logIn = (data: any): any => ({
   type: actionsForAutorizate.GET_AUTH,
+  data,
+});
+
+export const registr = (data: any): any => ({
+  type: actionsForAutorizate.GET_REGISTR,
   data,
 });
 

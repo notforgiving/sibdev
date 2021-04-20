@@ -10,20 +10,22 @@ import Hedaer from "./../../components/Header";
 import style from "./main.module.css";
 
 import { loadVideo } from "./../../redux/actions/videoAction";
-import {saveRequest} from './../../redux/actions/runRequest'
+import { saveRequest } from "./../../redux/actions/runRequest";
 import Save from "../../components/Save";
 
 function Main(props: any) {
   const { video, searchData }: any = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [request, setRequest] = useState(
     searchData.text != "" ? searchData.text : ""
   );
   const [selected, setSelected] = useState(
     searchData.text != "" ? searchData.text : ""
   );
-  const dispatch = useDispatch();
 
   const [save, setSave] = useState(false);
+
   const handlePostRequest = (value: string) => {
     if (value != "") {
       dispatch(loadVideo(value));
@@ -37,11 +39,15 @@ function Main(props: any) {
   const handleChangeSearch = (e: any) => {
     setSelected(e.target.value);
   };
+
   return (
-    <>
+    <div className={style.body}>
       <Hedaer />
       <section
-        className={classNames(`${style.section}`, `${style.sectionSearch}`)}
+        className={classNames(
+          `${style.section}`,
+          video.length > 0 ? `${style.sectionSearch}` : ``
+        )}
       >
         <div className={style.container}>
           <span className={style.title}>Поиск видео</span>
@@ -81,15 +87,15 @@ function Main(props: any) {
       </section>
       {save ? (
         <Save
-          purpuse={searchData.text!=''?"update":"create"}
+          purpuse={searchData.text != "" ? "update" : "create"}
           visable={save}
           close={handleSaveModal}
-          data={searchData}
+          data={searchData.text != "" ? searchData.text : selected}
         />
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 }
 

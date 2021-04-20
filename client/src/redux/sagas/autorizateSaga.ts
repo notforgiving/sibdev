@@ -9,7 +9,19 @@ function fetchAuth(userData: any) {
   const login = userData.data.login;
   const password = userData.data.password;
   return axios
-    .post(`http://localhost:5000/api/auth/login`, {
+    .post(`https://stormy-earth-24857.herokuapp.com/api/auth/login`, {
+      login,
+      password,
+    })
+    .then((response) => response.data)
+    .catch((reject) => reject);
+}
+
+function fetchRegistr(userData: any) {
+  const login = userData.data.login;
+  const password = userData.data.password;
+  return axios
+    .post(`https://stormy-earth-24857.herokuapp.com/api/auth/registration`, {
       login,
       password,
     })
@@ -19,10 +31,10 @@ function fetchAuth(userData: any) {
 
 async function auth() {
   if (
-    localStorage.getItem("token") != "null" &&
+    localStorage.getItem("token") != "undefined" &&
     localStorage.getItem("token") != null
   ) {
-    return await axios.get(`http://localhost:5000/api/auth/auth`, {
+    return await axios.get(`https://stormy-earth-24857.herokuapp.com/api/auth/auth`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
   } else {
@@ -35,6 +47,12 @@ function* workerGetAuth(userData: any) {
   yield put(loggedIn(data));
 }
 
+function* workerGetRegistr(userData: any) {
+  const data: { message: string } = yield call(fetchRegistr, userData);
+  const auth: Array<any> = yield call(fetchAuth, userData);
+  yield put(loggedIn(auth));
+}
+
 function* workerSetAuth() {
   const response: Array<any> | boolean = yield call(auth);
   yield put(setUser(response));
@@ -42,6 +60,10 @@ function* workerSetAuth() {
 
 export function* watchGetAuth() {
   yield takeEvery(actionsForAutorizate.GET_AUTH, workerGetAuth);
+}
+
+export function* watchGetRegistr() {
+  yield takeEvery(actionsForAutorizate.GET_REGISTR, workerGetRegistr);
 }
 
 export function* watchSetAuth() {
