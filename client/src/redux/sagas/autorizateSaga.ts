@@ -17,6 +17,19 @@ function fetchAuth(userData: any) {
     .catch((reject) => reject);
 }
 
+function fetchRegistr(userData: any) {
+  const login = userData.data.login;
+  const password = userData.data.password;
+  console.log(userData,'userData')
+  return axios
+    .post(`http://localhost:5000/api/auth/registration`, {
+      login,
+      password,
+    })
+    .then((response) => response.data)
+    .catch((reject) => reject);
+}
+
 async function auth() {
   if (
     localStorage.getItem("token") != "undefined" &&
@@ -36,6 +49,12 @@ function* workerGetAuth(userData: any) {
   yield put(loggedIn(data));
 }
 
+function* workerGetRegistr(userData: any) {
+  const data: {message: string} = yield call(fetchRegistr, userData);
+  const auth: Array<any> = yield call(fetchAuth, userData);
+  yield put(loggedIn(auth));
+}
+
 function* workerSetAuth() {
   const response: Array<any> | boolean = yield call(auth);
   yield put(setUser(response));
@@ -43,6 +62,10 @@ function* workerSetAuth() {
 
 export function* watchGetAuth() {
   yield takeEvery(actionsForAutorizate.GET_AUTH, workerGetAuth);
+}
+
+export function* watchGetRegistr() {
+  yield takeEvery(actionsForAutorizate.GET_REGISTR, workerGetRegistr);
 }
 
 export function* watchSetAuth() {

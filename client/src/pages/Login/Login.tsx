@@ -3,7 +3,7 @@ import { Form, Input, Button, Radio } from "antd";
 import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import Logo from "./../../assets/img/logo.svg";
-import {logIn} from './../../redux/actions/autorizateAcrion'
+import { logIn, registr } from "./../../redux/actions/autorizateAcrion";
 
 function LoginPage() {
   const [form] = Form.useForm();
@@ -18,11 +18,17 @@ function LoginPage() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit=()=>{
-    if(login!='' && password!=''){
-      dispatch(logIn({login,password}))
+  const handleSubmit = () => {
+    if (login != "" && password != "") {
+      dispatch(logIn({ login, password }));
     }
-  }
+  };
+
+  const handleRegistr = () => {
+    if (login != "" && password != "") {
+      dispatch(registr({ login, password }));
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -39,7 +45,14 @@ function LoginPage() {
             </Form.Item>
             <div className={styles.loginSubmit}>
               <Form.Item>
-                <Button onClick={handleSubmit} type="primary">Войти</Button>
+                <Button onClick={handleSubmit} type="primary">
+                  Войти
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Button onClick={handleRegistr} type="primary">
+                  Регистрация
+                </Button>
               </Form.Item>
             </div>
           </Form>
