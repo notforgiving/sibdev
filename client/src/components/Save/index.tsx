@@ -2,7 +2,7 @@ import { Modal, Button, Form, Input, Select } from "antd";
 import style from "./style.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveReq, upsReqsts,getReqsts } from "../../redux/actions/reqActions";
+import { saveReq, upsReqsts, getReqsts } from "../../redux/actions/reqActions";
 
 const { Option } = Select;
 
@@ -15,15 +15,18 @@ interface ISaveProp {
 
 function Save({ visable, close, data, purpuse }: ISaveProp) {
   const [form] = Form.useForm();
-  const [display, setDisplay] = useState(visable);
-  const [quantity, setQuantity] = useState(
-    purpuse == "create" ? 0 : data.value
-  );
   const dispatch = useDispatch();
+
+  const [display, setDisplay] = useState(visable);
+
+  const [quantity, setQuantity] = useState(
+    purpuse === "create" ? 0 : data.value
+  );
   const [name, setName] = useState(purpuse === "create" ? "" : data.name);
   const [sort, setSort] = useState(
     purpuse == "create" ? "Без сортировки" : `${data.sort}`
   );
+
   const handleChangeVisable = () => {
     setDisplay(!visable);
     close();

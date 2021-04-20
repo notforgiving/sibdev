@@ -20,7 +20,6 @@ function fetchAuth(userData: any) {
 function fetchRegistr(userData: any) {
   const login = userData.data.login;
   const password = userData.data.password;
-  console.log(userData,'userData')
   return axios
     .post(`http://localhost:5000/api/auth/registration`, {
       login,
@@ -35,7 +34,6 @@ async function auth() {
     localStorage.getItem("token") != "undefined" &&
     localStorage.getItem("token") != null
   ) {
-    console.log(localStorage.getItem("token"),'localStorage.getItem("token")')
     return await axios.get(`http://localhost:5000/api/auth/auth`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
@@ -50,7 +48,7 @@ function* workerGetAuth(userData: any) {
 }
 
 function* workerGetRegistr(userData: any) {
-  const data: {message: string} = yield call(fetchRegistr, userData);
+  const data: { message: string } = yield call(fetchRegistr, userData);
   const auth: Array<any> = yield call(fetchAuth, userData);
   yield put(loggedIn(auth));
 }

@@ -8,7 +8,7 @@ const initialState = {
 const autorizateReduser = (state = initialState, action: any) => {
   switch (action.type) {
     case actionsForAutorizate.LOG_OUT:
-      localStorage.setItem("token", "null");
+      localStorage.setItem("token", "undefined");
       return {
         ...state,
         currentUser: "null",
