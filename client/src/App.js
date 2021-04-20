@@ -1,8 +1,16 @@
+import { useEffect } from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 function App() {
   return (
-    <div>
-
-    </div>
+    <>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/"/>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 
