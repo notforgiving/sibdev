@@ -7,10 +7,9 @@ const { check, validationResult } = require("express-validator");
 const router = new Router();
 const authMiddleware = require("./../middleware/authmiddleware");
 
-router.post(
-  "/registration",
+router.post("/registration",
   [
-    check("login", "Uncorrect login").isLength({ min: 3}),
+    check("login", "Uncorrect login").isLength({ min: 3 }),
     check(
       "password",
       "Password must be longer than 3 and shorter than 12"
@@ -55,7 +54,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
     const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
-      expiresIn: "3h",
+      expiresIn: "30m",
     });
     return res.json({
       token,
@@ -70,22 +69,23 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get('/auth', authMiddleware,
-    async (req, res) => {
-        try {
-            const user = await User.findOne({_id: req.user.id})
-            const token = jwt.sign({id: user.id}, config.get("secretKey"), {expiresIn: "1h"})
-            return res.json({
-                token,
-                user: {
-                    id: user.id,
-                    login: user.login,
-                }
-            })
-        } catch (e) {
-            console.log(e)
-            res.send({message: "Server error"})
-        }
-    })
+router.get("/auth", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
+      expiresIn: "30m",
+    });
+    return res.json({
+      token,
+      user: {
+        id: user.id,
+        login: user.login,
+      },
+    });
+  } catch (e) {
+    console.log('error');
+    res.send({ message: "Server error" });
+  }
+});
 
 module.exports = router;
