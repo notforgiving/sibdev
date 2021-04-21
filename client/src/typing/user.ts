@@ -14,6 +14,11 @@ export interface loginDataUser {
   login: string
 }
 
+export interface UserData {
+  login: string,
+  password: string
+}
+
 export interface loginError {
   flag: boolean,
   message: string

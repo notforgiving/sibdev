@@ -1,18 +1,55 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
+import { logIn } from "./../../redux/actions/authorization";
 
 import styles from "./style.module.css";
 
 function Login() {
+  const dispatch = useDispatch();
   const [login, setLogin] = useState(true);
   const { errors } = useSelector((state: any) => state);
+  const [saveUser, setSaveUser] = useState(false);
+  const [userData, setUserData] = useState({
+    login: localStorage.getItem("user")
+      ? `${localStorage.getItem("user")}`
+      : "",
+    password: "",
+  });
 
   const handleChangeAction = () => {
     setLogin(!login);
+  };
+
+  const onChangeUserLogin = (event: any) => {
+    setUserData({
+      ...userData,
+      login: event.target.value,
+    });
+  };
+
+  const onChangeUserPassword = (event: any) => {
+    setUserData({
+      ...userData,
+      password: event.target.value,
+    });
+  };
+
+  const handleSubmitLogin = () => {
+    if (saveUser) {
+      localStorage.setItem("user", `${userData.login}`);
+    }
+    dispatch(logIn(userData));
+  };
+
+  const handleSaveUser = () => {
+    setSaveUser(!saveUser);
   };
 
   return (
@@ -35,6 +72,8 @@ function Login() {
               id="outlined-basic"
               label="E-mail"
               variant="outlined"
+              value={userData.login}
+              onChange={onChangeUserLogin}
             />
           </div>
           <div className={styles.loginInput}>
@@ -44,11 +83,30 @@ function Login() {
               type="password"
               autoComplete="current-password"
               variant="outlined"
+              value={userData.password}
+              onChange={onChangeUserPassword}
+            />
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={saveUser}
+                  onChange={handleSaveUser}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Запомнить меня"
             />
           </div>
         </div>
         <div className={styles.loginButtons}>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmitLogin}
+          >
             {login ? "Войти" : "Зарегистрироваться"}
           </Button>
           <button onClick={handleChangeAction} className={styles.loginLink}>
