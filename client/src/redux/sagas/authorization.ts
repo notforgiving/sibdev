@@ -2,8 +2,9 @@ import { put, call, all } from "redux-saga/effects";
 import { takeEvery } from "redux-saga/effects";
 import axios from "axios";
 import { actionsForAuthorization, setAuth } from "./../actions/authorization";
-import { login, loginError } from "./.././../typing/user";
+import { login } from "./.././../typing/user";
 import {setMessage} from './../actions/message';
+import {setLoading, setLoaded} from './../actions/loading';
 
 async function checkAuth() {
   const token: string | null = localStorage.getItem("token");
@@ -14,7 +15,7 @@ async function checkAuth() {
     };
   } else {
     return await axios.get(
-      `http://localhost:5000/api/auth/auth`,
+      `https://sibdev.herokuapp.com/api/auth/auth`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -23,8 +24,10 @@ async function checkAuth() {
 }
 
 function* workerCheckAuth() {
+  yield put(setLoading());
   const result: login = yield call(checkAuth);
   console.log(result.data,'result')
+  yield put(setLoaded());
   if(result.data.message){
     yield put(setMessage(result.data));
   }else {

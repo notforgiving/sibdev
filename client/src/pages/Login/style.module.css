@@ -1,0 +1,48 @@
+.loginForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loginFormBody {
+  padding: 16px;
+  height: 400px;
+  width: 400px;
+  display: flex;
+  box-shadow: 0 0 2px rgb(0 0 0 / 50%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.loginHeader {
+  text-align: center;
+}
+
+.loginFields {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginInput {
+  margin-bottom: 10px;
+}
+
+.loginButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginLink {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: #3f51b5;
+  margin-top: 8px;
+}
