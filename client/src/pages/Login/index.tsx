@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { logIn } from "./../../redux/actions/authorization";
+import { logIn, checkIn } from "./../../redux/actions/authorization";
 
 import styles from "./style.module.css";
 
@@ -48,6 +48,13 @@ function Login() {
     dispatch(logIn(userData));
   };
 
+  const handleSubmitCheckIn = () => {
+    if (saveUser) {
+      localStorage.setItem("user", `${userData.login}`);
+    }
+    dispatch(checkIn(userData));
+  };
+
   const handleSaveUser = () => {
     setSaveUser(!saveUser);
   };
@@ -61,7 +68,12 @@ function Login() {
           </Typography>
         </div>
         <div>
-          <Typography gutterBottom color="primary" variant="subtitle1">
+          <Typography
+            gutterBottom
+            color="primary"
+            variant="subtitle1"
+            className={styles.loginTextCenter}
+          >
             {errors.message ? `${errors.message}` : ""}
           </Typography>
         </div>
@@ -105,7 +117,7 @@ function Login() {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleSubmitLogin}
+            onClick={login ? handleSubmitLogin : handleSubmitCheckIn}
           >
             {login ? "Войти" : "Зарегистрироваться"}
           </Button>

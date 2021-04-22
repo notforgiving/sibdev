@@ -12,6 +12,12 @@ const authorizationReducer = (state = initialState, action: dataActions) => {
         ...action.payload,
       };
     }
+    case actionsForAuthorization.LOG_OUT: {
+      localStorage.setItem("token", `undefined`);
+      return {
+
+      }
+    }
     default:
       return state;
   }

@@ -15,7 +15,6 @@ module.exports = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (e) {
-    // return res.status(401).json({ message: "Error whith find users" });
     return res.json({ flag: false, message: "Время сеанса истекло" });
   }
 };

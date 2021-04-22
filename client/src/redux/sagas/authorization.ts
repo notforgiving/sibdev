@@ -23,11 +23,23 @@ async function checkAuth() {
   }
 }
 
-async function fetchLogin(loginData:UserData) {
+async function fetchLogin(loginData: UserData) {
   const login = loginData.login;
   const password = loginData.password;
   return axios
     .post(`https://sibdev.herokuapp.com/api/auth/login`, {
+      login,
+      password,
+    })
+    .then((response) => response)
+    .catch((reject) => reject);
+}
+
+async function fetchCheckIn(checkInData: UserData) {
+  const login = checkInData.login;
+  const password = checkInData.password;
+  return axios
+    .post(`https://sibdev.herokuapp.com/api/auth/registration`, {
       login,
       password,
     })
@@ -48,8 +60,20 @@ function* workerCheckAuth() {
 
 function* workerLogin({ payload }: { payload: UserData }) {
   yield put(setLoading());
-  const result: login = yield call(fetchLogin,payload);
+  const result: login = yield call(fetchLogin, payload);
+  yield put(setLoaded());
   yield put(setAuth(result.data));
+}
+
+function* workerCheckIn({ payload }: { payload: UserData }) {
+  yield put(setLoading());
+  const result: login = yield call(fetchCheckIn, payload);
+  if (result.data.message) {
+    yield put(setMessage(result.data));
+  } else {
+    yield put(setAuth(result.data));
+  }
+  console.log(result, "result");
   yield put(setLoaded());
 }
 
@@ -59,4 +83,8 @@ export function* watchCheckAuth() {
 
 export function* watchLogin() {
   yield takeEvery(actionsForAuthorization.LOGIN, workerLogin);
+}
+
+export function* watchCheckIn() {
+  yield takeEvery(actionsForAuthorization.CHECK_IN, workerCheckIn);
 }

@@ -1,3 +1,9 @@
 * {
   box-sizing: border-box;
 }
+
+.MuiTabs-flexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
