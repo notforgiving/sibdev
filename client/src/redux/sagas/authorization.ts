@@ -73,7 +73,7 @@ function* workerCheckIn({ payload }: { payload: UserData }) {
   } else {
     yield put(setAuth(result.data));
   }
-  console.log(result, "result");
+
   yield put(setLoaded());
 }
 

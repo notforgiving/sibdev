@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import {useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -8,28 +8,42 @@ import SearchIcon from "@material-ui/icons/Search";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import TabPanel from "./../../components/TabPanel";
+import Search from "./../../components/Search";
+import SaveModal from "./../../components/SaveModal";
 
-import {logOut} from './../../redux/actions/authorization';
+import { logOut } from "./../../redux/actions/authorization";
+import { setSearchString } from "./../../redux/actions/search";
 
 import styles from "./style.module.css";
 
 function Profile() {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(0);
+  const { search } = useSelector((state: any) => state);
 
-  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+  const [page, setPage] = useState(0);
+  const [visableModal, setVisableModal] = useState(false);
+
+  const handleChange = (event: ChangeEvent<{}>, newPage: number) => {
+    setPage(newPage);
   };
 
   const handleLogOut = () => {
-    dispatch(logOut())
+    dispatch(logOut());
+  };
+
+  const handleChangeSearch = (event: ChangeEvent<{ value: string }>) => {
+    dispatch(setSearchString(event?.target.value));
+  };
+
+  const handleChangeVisableModal = () => {
+    setVisableModal(!visableModal);
   };
 
   return (
     <div>
       <AppBar position="static">
         <Tabs
-          value={value}
+          value={page}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="off"
@@ -54,12 +68,19 @@ function Profile() {
           />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        123
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
+      <div className={styles.body}>
+        <TabPanel value={page} index={0}>
+          <Search
+            search={search}
+            onChange={handleChangeSearch}
+            modal={handleChangeVisableModal}
+          />
+        </TabPanel>
+        <TabPanel value={page} index={1}>
+          Item Two
+        </TabPanel>
+      </div>
+      {visableModal ? <SaveModal onClose={handleChangeVisableModal}/> : ""}
     </div>
   );
 }
