@@ -6,6 +6,7 @@ import { Favorite, favoriteDB } from "../../typing/favorite";
 import { actionsForFavorites, getFavorites, putFavorite } from "./../actions/favorites";
 
 import {sortValues} from './../../config/sorting';
+import { clearSearchString } from "../actions/search";
 
 const takeEvery: any = Eff.takeEvery;
 
@@ -55,7 +56,7 @@ function* workerSaveFavorite({ payload }: { payload: Favorite }) {
   if(result.status === 200 && result.data.message=="Запрос сохранен") {
 
   }
-  yield put(getFavorites());
+  yield put(clearSearchString())
   // yield put(setAuth(result.data));
 }
 

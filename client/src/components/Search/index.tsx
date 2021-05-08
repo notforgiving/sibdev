@@ -9,8 +9,6 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import styles from "./style.module.css";
 
-
-
 function Search({ search, onChange, modal }: SearchProps) {
   return (
     <Paper component="form" className={styles.root}>
@@ -18,6 +16,7 @@ function Search({ search, onChange, modal }: SearchProps) {
         className={styles.input}
         placeholder="Поиск видео"
         onChange={onChange}
+        value={search}
       />
       <IconButton
         className={styles.iconButton}

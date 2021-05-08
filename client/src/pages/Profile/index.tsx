@@ -10,7 +10,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import TabPanel from "./../../components/TabPanel";
 import Search from "./../../components/Search";
 import SaveModal from "./../../components/SaveModal";
-import Favorites from './../../components/Favorites';
+import Favorites from "./../../components/Favorites";
 import { logOut } from "./../../redux/actions/authorization";
 import { setSearchString } from "./../../redux/actions/search";
 
@@ -23,10 +23,13 @@ function Profile() {
 
   const [page, setPage] = useState(0);
   const [visableModal, setVisableModal] = useState(false);
+  const [searchString, setString] = useState('');
 
   useEffect(() => {
     dispatch(getFavorites());
   }, []);
+
+  useEffect(() => {setString(search)}, [search]);
 
   const handleChange = (event: ChangeEvent<{}>, newPage: number) => {
     setPage(newPage);
@@ -37,10 +40,11 @@ function Profile() {
   };
 
   const handleChangeSearch = (event: ChangeEvent<{ value: string }>) => {
-    dispatch(setSearchString(event?.target.value));
+    setString(event.target.value);
   };
 
   const handleChangeVisableModal = () => {
+    dispatch(setSearchString(searchString));
     setVisableModal(!visableModal);
   };
 
@@ -76,16 +80,16 @@ function Profile() {
       <div className={styles.body}>
         <TabPanel value={page} index={0}>
           <Search
-            search={search}
+            search={searchString}
             onChange={handleChangeSearch}
             modal={handleChangeVisableModal}
           />
         </TabPanel>
         <TabPanel value={page} index={1}>
-          <Favorites/>
+          <Favorites />
         </TabPanel>
       </div>
-      {visableModal ? <SaveModal onClose={handleChangeVisableModal}/> : ""}
+      {visableModal ? <SaveModal onClose={handleChangeVisableModal} /> : ""}
     </div>
   );
 }

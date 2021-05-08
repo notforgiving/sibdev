@@ -6,6 +6,9 @@ const searchReducer = (state = '', action: dataActions) => {
     case actionsForSearch.SET_SEARCH_STRING: {
       return action.payload
     }
+    case actionsForSearch.CLEAR_SEARCH_STRING: {
+      return ''
+    }
     default:
       return state;
   }
