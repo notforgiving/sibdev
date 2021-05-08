@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -10,11 +10,12 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import TabPanel from "./../../components/TabPanel";
 import Search from "./../../components/Search";
 import SaveModal from "./../../components/SaveModal";
-
+import Favorites from './../../components/Favorites';
 import { logOut } from "./../../redux/actions/authorization";
 import { setSearchString } from "./../../redux/actions/search";
 
 import styles from "./style.module.css";
+import { getFavorites } from "../../redux/actions/favorites";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ function Profile() {
 
   const [page, setPage] = useState(0);
   const [visableModal, setVisableModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(getFavorites());
+  }, []);
 
   const handleChange = (event: ChangeEvent<{}>, newPage: number) => {
     setPage(newPage);
@@ -77,7 +82,7 @@ function Profile() {
           />
         </TabPanel>
         <TabPanel value={page} index={1}>
-          Item Two
+          <Favorites/>
         </TabPanel>
       </div>
       {visableModal ? <SaveModal onClose={handleChangeVisableModal}/> : ""}

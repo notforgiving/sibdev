@@ -9,7 +9,7 @@ const authMiddleware = require("./../middleware/authmiddleware");
 
 router.post("/registration",
   [
-    check("login", "Uncorrect login").isLength({ min: 3 }),
+    check("login", "Uncorrect login").isLength({ min: 5 }),
     check(
       "password",
       "Password must be longer than 3 and shorter than 12"
@@ -46,11 +46,11 @@ router.post("/login", async (req, res) => {
     const { login, password } = req.body;
     const user = await User.findOne({ login });
     if (!user) {
-      return res.status(404).json({ message: "Такой пользователь не найден" });
+      return res.json({ message: "Такой пользователь не найден" });
     }
     const isPassValid = bcrypt.compareSync(password, user.password);
     if (!isPassValid) {
-      return res.status(400).json({ message: "Неверный пароль" });
+      return res.json({ message: "Неверный пароль" });
     }
     const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
       expiresIn: "30m",

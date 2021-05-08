@@ -5,7 +5,7 @@ import axios from "axios";
 import { login, UserData } from "./.././../typing/user";
 
 import { actionsForAuthorization, setAuth } from "./../actions/authorization";
-import { setMessage } from "./../actions/message";
+import { setMessage, clearMessage } from "./../actions/message";
 import { setLoading, setLoaded } from "./../actions/loading";
 
 const takeEvery: any = Eff.takeEvery;
@@ -32,7 +32,7 @@ async function fetchLogin(loginData: UserData) {
       password,
     })
     .then((response) => response)
-    .catch((reject) => reject);
+    .catch((error) => error);
 }
 
 async function fetchCheckIn(checkInData: UserData) {
@@ -62,7 +62,11 @@ function* workerLogin({ payload }: { payload: UserData }) {
   yield put(setLoading());
   const result: login = yield call(fetchLogin, payload);
   yield put(setLoaded());
-  yield put(setAuth(result.data));
+  if (result.data.message) {
+    yield put(setMessage(result.data));
+  } else {
+    yield put(setAuth(result.data));
+  }
 }
 
 function* workerCheckIn({ payload }: { payload: UserData }) {
@@ -72,6 +76,12 @@ function* workerCheckIn({ payload }: { payload: UserData }) {
     yield put(setMessage(result.data));
   } else {
     yield put(setAuth(result.data));
+  }
+
+  if (result.data.message=="Пользователь создан") {
+    const loginData: login = yield call(fetchLogin, payload);
+    yield put(setAuth(loginData.data));
+    yield put(clearMessage())
   }
 
   yield put(setLoaded());

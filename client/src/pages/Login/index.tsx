@@ -6,8 +6,10 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { red } from "@material-ui/core/colors";
 
 import { logIn, checkIn } from "./../../redux/actions/authorization";
+import { clearMessage } from "./../../redux/actions/message";
 
 import styles from "./style.module.css";
 
@@ -25,6 +27,9 @@ function Login() {
 
   const handleChangeAction = () => {
     setLogin(!login);
+    if (errors.message) {
+      dispatch(clearMessage());
+    }
   };
 
   const onChangeUserLogin = (event: any) => {
@@ -70,9 +75,9 @@ function Login() {
         <div>
           <Typography
             gutterBottom
-            color="primary"
             variant="subtitle1"
             className={styles.loginTextCenter}
+            style={{ color: red[500] }}
           >
             {errors.message ? `${errors.message}` : ""}
           </Typography>

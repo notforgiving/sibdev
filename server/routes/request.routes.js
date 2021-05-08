@@ -10,10 +10,10 @@ router.post("/save", authMiddleware, async (req, res) => {
 
     await mark.save();
 
-    return res.json({ message: "Request done" });
+    return res.json({ message: "Запрос сохранен" });
   } catch (e) {
     console.log(e);
-    res.send({ message: "Server error" });
+    res.send({ message: "Ошибка при сохранении запроса" });
   }
 });
 

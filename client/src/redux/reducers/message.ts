@@ -9,6 +9,8 @@ const messageReducer = (state = initialState, action: dataActions) => {
       return {
         ...action.payload
       }
+    case actionsForMessage.CLEAR_MESSAGE:
+      return {}
     default:
       return state;
   }

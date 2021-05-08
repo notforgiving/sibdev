@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import {SearchProps} from './../../typing/search';
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
@@ -10,15 +9,9 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import styles from "./style.module.css";
 
-interface SearchProps {
-  search: string;
-  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  modal: React.ChangeEventHandler<any>;
-}
+
 
 function Search({ search, onChange, modal }: SearchProps) {
-
-
   return (
     <Paper component="form" className={styles.root}>
       <InputBase
