@@ -78,10 +78,10 @@ function* workerCheckIn({ payload }: { payload: UserData }) {
     yield put(setAuth(result.data));
   }
 
-  if (result.data.message=="Пользователь создан") {
+  if (result.data.message == "Пользователь создан") {
     const loginData: login = yield call(fetchLogin, payload);
     yield put(setAuth(loginData.data));
-    yield put(clearMessage())
+    yield put(clearMessage());
   }
 
   yield put(setLoaded());

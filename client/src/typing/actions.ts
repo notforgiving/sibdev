@@ -1,8 +1,8 @@
 export interface baseActions {
-  type: string,
+  type: string;
 }
 
 export interface dataActions {
-  type: string,
-  payload: any,
+  type: string;
+  payload: any;
 }

@@ -9,6 +9,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { red } from "@material-ui/core/colors";
 
 import { logIn, checkIn } from "./../../redux/actions/authorization";
+
 import { clearMessage } from "./../../redux/actions/message";
 
 import styles from "./style.module.css";

@@ -11,11 +11,12 @@ import TabPanel from "./../../components/TabPanel";
 import Search from "./../../components/Search";
 import SaveModal from "./../../components/SaveModal";
 import Favorites from "./../../components/Favorites";
+
 import { logOut } from "./../../redux/actions/authorization";
 import { setSearchString } from "./../../redux/actions/search";
+import { getFavorites } from "../../redux/actions/favorites";
 
 import styles from "./style.module.css";
-import { getFavorites } from "../../redux/actions/favorites";
 
 function Profile() {
   const dispatch = useDispatch();

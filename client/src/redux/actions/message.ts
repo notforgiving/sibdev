@@ -7,9 +7,9 @@ export enum actionsForMessage {
 
 export const setMessage = (message: any): dataActions => ({
   type: actionsForMessage.SET_MESSAGE,
-  payload: message
+  payload: message,
 });
 
 export const clearMessage = (): baseActions => ({
-  type: actionsForMessage.CLEAR_MESSAGE
+  type: actionsForMessage.CLEAR_MESSAGE,
 });

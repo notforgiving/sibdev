@@ -1,9 +1,10 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
+
 import Request from "./../Request";
-import styles from "./style.module.css";
-import Preloader from "../Preloader";
+
 import { favoriteDB } from "../../typing/favorite";
+
+import styles from "./style.module.css";
 
 function Favorites() {
   const { favorites } = useSelector((state: any) => state);

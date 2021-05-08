@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import {sortValues} from './../../config/sorting';
+
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { green } from "@material-ui/core/colors";
 import ShareIcon from "@material-ui/icons/Share";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+
 import styles from "./style.module.css";
 
 interface requestProp {

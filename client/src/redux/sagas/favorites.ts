@@ -3,9 +3,13 @@ import * as Eff from "redux-saga/effects";
 import axios from "axios";
 
 import { Favorite, favoriteDB } from "../../typing/favorite";
-import { actionsForFavorites, getFavorites, putFavorite } from "./../actions/favorites";
+import {
+  actionsForFavorites,
+  getFavorites,
+  putFavorite,
+} from "./../actions/favorites";
 
-import {sortValues} from './../../config/sorting';
+import { sortValues } from "./../../config/sorting";
 import { clearSearchString } from "../actions/search";
 
 const takeEvery: any = Eff.takeEvery;
@@ -35,28 +39,26 @@ async function fetchSaveFavorite(favorite: Favorite) {
 
 async function fetchGetFavorite() {
   return axios
-    .get(
-      "https://sibdev.herokuapp.com/api/req/get",
-      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-    )
+    .get("https://sibdev.herokuapp.com/api/req/get", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
     .then((response) => response.data)
     .catch((reject) => reject);
 }
 
 interface saveResult {
-  status: number,
+  status: number;
   data: {
-    message: string
-  }
+    message: string;
+  };
 }
 
 function* workerSaveFavorite({ payload }: { payload: Favorite }) {
   const result: saveResult = yield call(fetchSaveFavorite, payload);
   console.log(result, "result");
-  if(result.status === 200 && result.data.message=="Запрос сохранен") {
-
+  if (result.status === 200 && result.data.message == "Запрос сохранен") {
   }
-  yield put(clearSearchString())
+  yield put(clearSearchString());
   // yield put(setAuth(result.data));
 }
 

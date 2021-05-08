@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import {sortValues} from './../../config/sorting';
+
 import Modal from "@material-ui/core/Modal";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
@@ -9,8 +12,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+
 import { setFavorite } from "./../../redux/actions/favorites";
-import {sortValues} from './../../config/sorting';
+
 import styles from "./style.module.css";
 
 interface SaveModalProps {

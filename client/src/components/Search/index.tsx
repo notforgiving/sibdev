@@ -1,4 +1,3 @@
-import {SearchProps} from './../../typing/search';
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
@@ -6,6 +5,8 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import SearchIcon from "@material-ui/icons/Search";
+
+import {SearchProps} from './../../typing/search';
 
 import styles from "./style.module.css";
 

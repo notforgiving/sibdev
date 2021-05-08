@@ -1,5 +1,4 @@
 import { Default } from "react-spinners-css";
-
 import styles from "./preloader.module.css";
 
 function Preloader() {

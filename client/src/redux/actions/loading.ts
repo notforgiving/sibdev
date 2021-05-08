@@ -2,7 +2,7 @@ import { baseActions } from "./../../typing/actions";
 
 export enum actionsForLoading {
   LOADING = "LOADING",
-  LOADED = "LOADED"
+  LOADED = "LOADED",
 }
 
 export const setLoading = (): baseActions => ({
