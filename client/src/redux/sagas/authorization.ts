@@ -66,6 +66,7 @@ function* workerLogin({ payload }: { payload: UserData }) {
     yield put(setMessage(result.data));
   } else {
     yield put(setAuth(result.data));
+    yield put(clearMessage())
   }
 }
 
@@ -76,6 +77,7 @@ function* workerCheckIn({ payload }: { payload: UserData }) {
     yield put(setMessage(result.data));
   } else {
     yield put(setAuth(result.data));
+    yield put(clearMessage())
   }
 
   if (result.data.message == "Пользователь создан") {

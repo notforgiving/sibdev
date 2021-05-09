@@ -1,6 +1,6 @@
 import { all } from "redux-saga/effects";
 import { watchCheckAuth, watchLogin, watchCheckIn } from "./authorization";
-import { watchSaveFavorite, watchGetFavorite } from "./favorites";
+import { watchSaveFavorite, watchGetFavorite, watchDeleteFavorite } from "./favorites";
 
 export function* rootSaga() {
   yield all([
@@ -9,5 +9,6 @@ export function* rootSaga() {
     watchCheckIn(),
     watchSaveFavorite(),
     watchGetFavorite(),
+    watchDeleteFavorite()
   ]);
 }

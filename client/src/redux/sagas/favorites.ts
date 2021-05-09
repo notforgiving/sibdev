@@ -11,17 +11,19 @@ import {
 
 import { sortValues } from "./../../config/sorting";
 import { clearSearchString } from "../actions/search";
+import { setMessage } from "../actions/message";
 
 const takeEvery: any = Eff.takeEvery;
 
 async function fetchSaveFavorite(favorite: Favorite) {
-  console.log(favorite, "favorite");
-
-  const sortText = sortValues.filter((item) => item.id == favorite.sort);
+  let sortText = favorite.sort
+    ? sortValues.filter((item) => item.id == favorite.sort)
+    : sortValues.filter((item, index) => index == 1);
   const text = favorite.request;
   const name = favorite.name;
   const sort = sortText[0].text;
   const value = favorite.number;
+
   return axios
     .post(
       "https://sibdev.herokuapp.com/api/req/save",
@@ -46,25 +48,58 @@ async function fetchGetFavorite() {
     .catch((reject) => reject);
 }
 
+async function fetchDeleteFavorite(id: string) {
+  return axios
+    .post(
+      "https://sibdev.herokuapp.com/api/req/del",
+      { id },
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    )
+    .then((response) => response.data)
+    .catch((reject) => reject);
+}
+
 interface saveResult {
   status: number;
   data: {
     message: string;
+    status: number;
   };
 }
 
 function* workerSaveFavorite({ payload }: { payload: Favorite }) {
   const result: saveResult = yield call(fetchSaveFavorite, payload);
-  console.log(result, "result");
-  if (result.status === 200 && result.data.message == "Запрос сохранен") {
+  if (result.data.status) {
+    yield put(setMessage(result.data));
+    yield put(clearSearchString());
+    const newFavorites: favoriteDB[] = yield call(fetchGetFavorite);
+    yield put(putFavorite(newFavorites));
+  } else {
+    yield put(setMessage(result.data));
   }
-  yield put(clearSearchString());
-  // yield put(setAuth(result.data));
 }
 
 function* workerGetFavorite() {
   const result: favoriteDB[] = yield call(fetchGetFavorite);
   yield put(putFavorite(result));
+}
+
+interface IResult {
+  message: string;
+  status: number;
+}
+
+function* workerDeleteFavorite({ payload }: { payload: string }) {
+  const result: IResult = yield call(fetchDeleteFavorite, payload);
+  if (result.status) {
+    yield put(setMessage(result));
+    const newFavorites: favoriteDB[] = yield call(fetchGetFavorite);
+    yield put(putFavorite(newFavorites));
+  } else {
+    yield put(setMessage(result));
+  }
 }
 
 export function* watchSaveFavorite() {
@@ -73,4 +108,8 @@ export function* watchSaveFavorite() {
 
 export function* watchGetFavorite() {
   yield takeEvery(actionsForFavorites.GET_FAVORITES, workerGetFavorite);
+}
+
+export function* watchDeleteFavorite() {
+  yield takeEvery(actionsForFavorites.DELETE_FAVORITES, workerDeleteFavorite);
 }

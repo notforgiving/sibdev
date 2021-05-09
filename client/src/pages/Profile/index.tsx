@@ -14,30 +14,47 @@ import Favorites from "./../../components/Favorites";
 
 import { logOut } from "./../../redux/actions/authorization";
 import { setSearchString } from "./../../redux/actions/search";
-import { getFavorites } from "../../redux/actions/favorites";
+import { clearFavorites, getFavorites } from "../../redux/actions/favorites";
 
 import styles from "./style.module.css";
+import Alert from "@material-ui/lab/Alert";
+import { Snackbar } from "@material-ui/core";
+import { clearMessage } from "../../redux/actions/message";
 
 function Profile() {
   const dispatch = useDispatch();
-  const { search } = useSelector((state: any) => state);
+  const { search, errors } = useSelector((state: any) => state);
 
   const [page, setPage] = useState(0);
   const [visableModal, setVisableModal] = useState(false);
-  const [searchString, setString] = useState('');
+  const [searchString, setString] = useState("");
+  const [alert, setAlert] = useState(false);
 
   useEffect(() => {
     dispatch(getFavorites());
   }, []);
 
-  useEffect(() => {setString(search)}, [search]);
+  useEffect(() => {
+    setString(search);
+  }, [search]);
+
+  useEffect(() => {
+    setAlert(true);
+  }, [errors.message]);
+
+  const handleCloseAlert = () => {
+    setAlert(false);
+  };
 
   const handleChange = (event: ChangeEvent<{}>, newPage: number) => {
     setPage(newPage);
+    dispatch(clearMessage());
   };
 
   const handleLogOut = () => {
     dispatch(logOut());
+    dispatch(clearMessage());
+    dispatch(clearFavorites());
   };
 
   const handleChangeSearch = (event: ChangeEvent<{ value: string }>) => {
@@ -91,6 +108,26 @@ function Profile() {
         </TabPanel>
       </div>
       {visableModal ? <SaveModal onClose={handleChangeVisableModal} /> : ""}
+      {errors.message ? (
+        <Snackbar
+          open={alert}
+          autoHideDuration={2000}
+          onClose={handleCloseAlert}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <Alert
+            onClose={handleCloseAlert}
+            severity={errors.status ? "success" : "warning"}
+          >
+            {errors.message}
+          </Alert>
+        </Snackbar>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

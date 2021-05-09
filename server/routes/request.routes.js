@@ -10,10 +10,9 @@ router.post("/save", authMiddleware, async (req, res) => {
 
     await mark.save();
 
-    return res.json({ message: "Запрос сохранен" });
+    return res.json({ message: "Запрос сохранен",status: 1 });
   } catch (e) {
-    console.log(e);
-    res.send({ message: "Ошибка при сохранении запроса" });
+    res.json({ message: "Ошибка при сохранении запроса", status: 0 });
   }
 });
 
@@ -28,10 +27,9 @@ router.post("/change", authMiddleware, async (req, res) => {
       }
     );
 
-    return res.json({ message: "Request done" });
+    return res.json({ message: "Запрос изменен",status: 1 });
   } catch (e) {
-    console.log(e);
-    res.send({ message: "Server error" });
+    res.send({ message: "Ошибка при изменении запроса",status: 0 });
   }
 });
 
@@ -41,8 +39,24 @@ router.get("/get", authMiddleware, async (req, res) => {
 
     return res.json(requests);
   } catch (e) {
+    res.send({ message: "Ошибка при получении запросов",status: 0 });
+  }
+});
+
+router.post("/del", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.body;
+    Request.findByIdAndDelete(id, function (err, docs) {
+      if (err){
+        return res.json({ message: "Ошибка при удалении запроса",status: 0 });
+      }
+      else{
+        return res.json({ message: "Запрос удален", status: 1 });
+      }
+  });
+  } catch (e) {
     console.log(e);
-    res.send({ message: "Server error" });
+    res.send({ message: "Ошибка при подключении к базе", status: 404 });
   }
 });
 
