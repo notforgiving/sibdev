@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import {sortValues} from './../../config/sorting';
+import { sortValues } from "./../../config/sorting";
 
 import Modal from "@material-ui/core/Modal";
 import Paper from "@material-ui/core/Paper";
@@ -13,22 +13,39 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-import { setFavorite } from "./../../redux/actions/favorites";
+import { setFavorite, updateFavorite } from "./../../redux/actions/favorites";
 
 import styles from "./style.module.css";
 
 interface SaveModalProps {
   onClose: any;
+  searchName?: string;
+  searchText?: string;
+  searchValue?: number;
+  searchSort?: string;
+  id?: string;
+  update?: boolean;
 }
 
-function SaveModal({ onClose }: SaveModalProps) {
+function SaveModal({
+  onClose,
+  searchName,
+  searchText,
+  searchValue,
+  searchSort,
+  id,
+  update,
+}: SaveModalProps) {
+  const numberSort = sortValues.filter((item: any) => {
+    return item.text == searchSort;
+  });
   const dispatch = useDispatch();
   const { search } = useSelector((state: any) => state);
   const [parametrs, setParametrs] = useState({
-    number: 0,
-    name: "",
-    sort: 0,
-    request: search,
+    number: searchValue ? searchValue : 0,
+    name: searchName ? searchName : "",
+    sort: searchSort ? numberSort[0].id : 0,
+    request: searchText ? searchText : search,
   });
 
   const handleChangeValue = (e: any) => {
@@ -54,6 +71,11 @@ function SaveModal({ onClose }: SaveModalProps) {
 
   const saveRequest = () => {
     dispatch(setFavorite(parametrs));
+    onClose();
+  };
+
+  const updateRequest = () => {
+    dispatch(updateFavorite({ id, ...parametrs }));
     onClose();
   };
 
@@ -92,13 +114,13 @@ function SaveModal({ onClose }: SaveModalProps) {
           label="Сортировка"
           onChange={handlChangeSort}
         >
-          {
-            sortValues.map((sort:any,index:number)=>{
-              return <MenuItem value={sort.id} key={index}>
-              {sort.name}
-            </MenuItem>
-            })
-          }
+          {sortValues.map((sort: any, index: number) => {
+            return (
+              <MenuItem value={sort.id} key={index}>
+                {sort.name}
+              </MenuItem>
+            );
+          })}
         </Select>
         <div className={styles.modalRange}>
           <Typography>Количество результатов</Typography>
@@ -117,7 +139,11 @@ function SaveModal({ onClose }: SaveModalProps) {
         </div>
       </FormControl>
       <div className={styles.modalButtons}>
-        <Button variant="contained" color="primary" onClick={saveRequest}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={update ? updateRequest : saveRequest}
+        >
           Сохранить
         </Button>
         <Button variant="contained" color="secondary" onClick={onClose}>

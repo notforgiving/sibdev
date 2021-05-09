@@ -6,7 +6,8 @@ export enum actionsForFavorites {
   GET_FAVORITES = "GET_FAVORITES",
   PUT_FAVORITES = "PUT_FAVORITES",
   DELETE_FAVORITES = "DELETE_FAVORITES",
-  CLEAR_FAVORITES = "CLEAR_FAVORITES"
+  CLEAR_FAVORITES = "CLEAR_FAVORITES",
+  UPDATE_FAVORITE = "UPDATE_FAVORITE"
 }
 
 export const setFavorite = (favorite: Favorite): dataActions => ({
@@ -30,5 +31,10 @@ export const deleteFavorite = (id: string): dataActions => ({
 
 export const clearFavorites = (): baseActions => ({
   type: actionsForFavorites.CLEAR_FAVORITES,
+});
+
+export const updateFavorite = (favorite: Favorite): dataActions => ({
+  type: actionsForFavorites.UPDATE_FAVORITE,
+  payload: favorite,
 });
 

@@ -16,18 +16,23 @@ router.post("/save", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/change", authMiddleware, async (req, res) => {
+router.post("/update", authMiddleware, async (req, res) => {
   try {
-    const { text, name, sort, value, objectid } = req.body;
+    const { id, text, name, sort, value } = req.body;
+
     Request.findByIdAndUpdate(
-      objectid,
+      id,
       { $set: { text: text,name: name,sort: sort,value: value } },
       function (err) {
-        console.log(err);
+        if (err){
+          return res.json({ message: "Ошибка при обновлении запроса",status: 0 });
+        }
+        else{
+          return res.json({ message: "Запрос обновлен", status: 1 });
+        }
       }
     );
 
-    return res.json({ message: "Запрос изменен",status: 1 });
   } catch (e) {
     res.send({ message: "Ошибка при изменении запроса",status: 0 });
   }

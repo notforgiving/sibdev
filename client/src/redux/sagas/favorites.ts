@@ -2,7 +2,12 @@ import { put, call } from "redux-saga/effects";
 import * as Eff from "redux-saga/effects";
 import axios from "axios";
 
-import { Favorite, favoriteDB } from "../../typing/favorite";
+import {
+  Favorite,
+  favoriteDB,
+  saveResult,
+  IResult,
+} from "../../typing/favorite";
 import {
   actionsForFavorites,
   getFavorites,
@@ -61,12 +66,30 @@ async function fetchDeleteFavorite(id: string) {
     .catch((reject) => reject);
 }
 
-interface saveResult {
-  status: number;
-  data: {
-    message: string;
-    status: number;
-  };
+async function fetchUpdateFavorite(favorite: Favorite) {
+  let sortText = favorite.sort
+    ? sortValues.filter((item) => item.id == favorite.sort)
+    : sortValues.filter((item, index) => index == 1);
+  const text = favorite.request;
+  const name = favorite.name;
+  const sort = sortText[0].text;
+  const value = favorite.number;
+  const id = favorite.id;
+
+  return axios
+    .post(
+      "https://sibdev.herokuapp.com/api/req/update",
+      {
+        id,
+        text,
+        name,
+        sort,
+        value,
+      },
+      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+    )
+    .then((response) => response)
+    .catch((reject) => reject);
 }
 
 function* workerSaveFavorite({ payload }: { payload: Favorite }) {
@@ -86,11 +109,6 @@ function* workerGetFavorite() {
   yield put(putFavorite(result));
 }
 
-interface IResult {
-  message: string;
-  status: number;
-}
-
 function* workerDeleteFavorite({ payload }: { payload: string }) {
   const result: IResult = yield call(fetchDeleteFavorite, payload);
   if (result.status) {
@@ -99,6 +117,17 @@ function* workerDeleteFavorite({ payload }: { payload: string }) {
     yield put(putFavorite(newFavorites));
   } else {
     yield put(setMessage(result));
+  }
+}
+
+function* workerUpdateFavorite({ payload }: { payload: Favorite }) {
+  const result: saveResult = yield call(fetchUpdateFavorite, payload);
+  if (result.data.status) {
+    yield put(setMessage(result.data));
+    const newFavorites: favoriteDB[] = yield call(fetchGetFavorite);
+    yield put(putFavorite(newFavorites));
+  } else {
+      yield put(setMessage(result.data));
   }
 }
 
@@ -112,4 +141,8 @@ export function* watchGetFavorite() {
 
 export function* watchDeleteFavorite() {
   yield takeEvery(actionsForFavorites.DELETE_FAVORITES, workerDeleteFavorite);
+}
+
+export function* watchUpdateFavorite() {
+  yield takeEvery(actionsForFavorites.UPDATE_FAVORITE, workerUpdateFavorite);
 }
