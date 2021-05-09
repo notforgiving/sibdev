@@ -1,0 +1,14 @@
+.requestBody{
+  margin-bottom: 16px;
+}
+
+.requestActions{
+  display: flex;
+  align-items: center;
+}
+
+.requestFooter{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 16px !important;
+}

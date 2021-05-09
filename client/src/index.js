@@ -7,6 +7,8 @@ import { createBrowserHistory } from "history";
 import store from "./redux/store";
 import App from "./App"
 
+import './index.css';
+
 const history = createBrowserHistory();
 
 ReactDOM.render(

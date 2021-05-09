@@ -1,24 +1,14 @@
 import { all } from "redux-saga/effects";
-
-import { watchLoadVideo, watchGetViewCount } from "./videoSaga";
-import { watchGetAuth, watchSetAuth, watchGetRegistr } from "./autorizateSaga";
-import {
-  watchSaveReq,
-  watchGetReqsts,
-  watchUpdReqsts,
-} from "./saveRequestSaga";
-import { watchRunRequest } from "./runRequestSaga";
+import { watchCheckAuth, watchLogin, watchCheckIn } from "./authorization";
+import { watchSaveFavorite, watchGetFavorite, watchDeleteFavorite } from "./favorites";
 
 export function* rootSaga() {
   yield all([
-    watchLoadVideo(),
-    watchGetViewCount(),
-    watchGetAuth(),
-    watchSaveReq(),
-    watchSetAuth(),
-    watchGetReqsts(),
-    watchUpdReqsts(),
-    watchRunRequest(),
-    watchGetRegistr(),
+    watchCheckAuth(),
+    watchLogin(),
+    watchCheckIn(),
+    watchSaveFavorite(),
+    watchGetFavorite(),
+    watchDeleteFavorite()
   ]);
 }

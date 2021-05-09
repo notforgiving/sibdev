@@ -2,41 +2,42 @@ import { useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { authentification } from "./redux/actions/autorizateAcrion";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Preloader from "./components/Preloader";
 
-import Main from "./pages/Main/Main";
-import LoginPage from "./pages/Login/Login";
-import Favorites from "./pages/Favorites/Favorites";
-
-import style from "./generalStyle.module.css";
-import "./theme.css";
-import "antd/dist/antd.css";
+import { checkAuth } from "./redux/actions/authorization";
 
 function App() {
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state);
+  const { user, loading } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(authentification());
-  }, [dispatch]);
+    dispatch(checkAuth());
+  }, []);
+
+  useEffect(() => {}, [loading]);
 
   return (
-    <div className={style.container}>
+    <>
       <BrowserRouter>
-        {!auth.isAuth ? (
-          <Switch>
-            <Route exact path="/login" component={LoginPage} />
-            <Redirect to='/login'/>
-          </Switch>
+        {!loading ? (
+          !user.token ? (
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <Redirect to="/login" />
+            </Switch>
+          ) : (
+            <Switch>
+              <Route exact path="/" component={Profile} />
+              <Redirect to="/" />
+            </Switch>
+          )
         ) : (
-          <Switch>
-            <Route exact path="/" component={Main} />
-            <Route path="/favorites" component={Favorites} />
-            <Redirect to="/"/>
-          </Switch>
+          <Preloader/>
         )}
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 

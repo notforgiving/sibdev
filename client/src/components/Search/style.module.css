@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  padding: 2px 4px;
+  width: 100%;
+}
+
+.input {
+  padding: 0 24px;
+  flex: 2
+}
