@@ -2,15 +2,21 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import SearchIcon from "@material-ui/icons/Search";
 
-import {SearchProps} from './../../typing/search';
+import { SearchProps } from "./../../typing/search";
 
 import styles from "./style.module.css";
+import { getVideos } from "../../redux/actions/video";
+import { useDispatch } from "react-redux";
 
 function Search({ search, onChange, modal }: SearchProps) {
+  const dispatch = useDispatch();
+  
+  const handleRunSearch = () => {
+    dispatch(getVideos(search))
+  };
   return (
     <Paper component="form" className={styles.root}>
       <InputBase
@@ -27,9 +33,10 @@ function Search({ search, onChange, modal }: SearchProps) {
         {search != "" ? <FavoriteBorderIcon /> : ""}
       </IconButton>
       <IconButton
-        type="submit"
         className={styles.iconButton}
         aria-label="search"
+        onClick={handleRunSearch}
+        disabled={!search}
       >
         <SearchIcon />
       </IconButton>
@@ -39,3 +46,7 @@ function Search({ search, onChange, modal }: SearchProps) {
 }
 
 export default Search;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+

@@ -16,7 +16,7 @@ import {
 
 import { sortValues } from "./../../config/sorting";
 import { clearSearchString } from "../actions/search";
-import { setMessage } from "../actions/message";
+import { setMessage, clearMessage } from "../actions/message";
 
 const takeEvery: any = Eff.takeEvery;
 
@@ -93,6 +93,7 @@ async function fetchUpdateFavorite(favorite: Favorite) {
 }
 
 function* workerSaveFavorite({ payload }: { payload: Favorite }) {
+  yield put(clearMessage())
   const result: saveResult = yield call(fetchSaveFavorite, payload);
   if (result.data.status) {
     yield put(setMessage(result.data));
@@ -110,6 +111,7 @@ function* workerGetFavorite() {
 }
 
 function* workerDeleteFavorite({ payload }: { payload: string }) {
+  yield put(clearMessage())
   const result: IResult = yield call(fetchDeleteFavorite, payload);
   if (result.status) {
     yield put(setMessage(result));
@@ -121,6 +123,7 @@ function* workerDeleteFavorite({ payload }: { payload: string }) {
 }
 
 function* workerUpdateFavorite({ payload }: { payload: Favorite }) {
+  yield put(clearMessage())
   const result: saveResult = yield call(fetchUpdateFavorite, payload);
   if (result.data.status) {
     yield put(setMessage(result.data));
