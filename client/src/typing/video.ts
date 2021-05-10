@@ -14,15 +14,5 @@ export interface IVideo {
 }
 
 export interface IVideosResult {
-  config: any;
-  data: {
-    etag: string;
-    items: IVideo[];
-    kind: string;
-    pageInfo: any;
-  };
-  headers: any;
-  request: any;
-  status: number;
-  statusText: string;
+  items: IVideo[];
 }

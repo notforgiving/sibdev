@@ -12,7 +12,7 @@ export const getVideos = (search: string): dataActions => ({
   payload: search
 });
 
-export const putVideos = (videos: IVideosResult): dataActions => ({
+export const putVideos = (videos: IVideosResult[]): dataActions => ({
   type: actionsForVideo.PUT_VIDEOS,
   payload: videos
 });

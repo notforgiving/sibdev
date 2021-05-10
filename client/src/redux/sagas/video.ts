@@ -10,12 +10,14 @@ const takeEvery: any = Eff.takeEvery;
 
 async function fetchGetStatistics(id: string) {
   const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE`;
-  return axios.get(url);
+  return axios.get(url).then(data=>{
+    return data.data.items[0]
+  });
 }
 
 async function fetchGetVideos(search: string) {
   const videos = [];
-  const url = `https://youtube.googleapis.com/youtube/v3/search?maxResults=25&order=date&q=${search}&relevanceLanguage=ru&type=video&key=AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE`;
+  const url = `https://youtube.googleapis.com/youtube/v3/search?maxResults=10&order=date&q=${search}&relevanceLanguage=ru&type=video&key=AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE`;
   return await axios
     .get(url)
     .then((response) => {
@@ -25,13 +27,16 @@ async function fetchGetVideos(search: string) {
         })
       );
     })
-    .then((data) => data)
+    .then((data) => {
+      return data
+    })
     .catch((reject) => reject);
 }
 
 function* workerGetVideos({ payload }: { payload: string }) {
   yield put(setLoading());
-  const result: IVideosResult = yield call(fetchGetVideos, payload);
+  const result: IVideosResult[] = yield call(fetchGetVideos, payload);
+  console.log(result,'result')
   yield put(setLoaded());
   yield put(putVideos(result))
 }
