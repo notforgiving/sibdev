@@ -37,7 +37,6 @@ async function fetchGetVideos({ search, order, maxResults }: searchOptions) {
 }
 
 function* workerGetVideos({ payload }: { payload: searchOptions }) {
-  console.log(payload, "payload");
   yield put(setLoading());
   const result: IVideosResult[] = yield call(fetchGetVideos, payload);
   yield put(setSearchString(payload.search));
