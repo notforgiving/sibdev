@@ -16,3 +16,12 @@ export interface IVideo {
 export interface IVideosResult {
   items: IVideo[];
 }
+
+export interface VideoProp {
+  pic: string;
+  title: string;
+  date: string;
+  url: string;
+  viewCount: string;
+  channelTitle: string;
+}

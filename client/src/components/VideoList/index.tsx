@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
-import { IVideo } from "../../typing/video";
+
 import Video from "../Video";
+
+import { IVideo } from "../../typing/video";
+
 import styles from "./style.module.css";
 
 function VideoList() {
@@ -16,7 +19,6 @@ function VideoList() {
                 key={video.id}
                 pic={video.snippet.thumbnails.medium.url}
                 title={video.snippet.title}
-                description={video.snippet.description}
                 date = {video.snippet.publishedAt}
                 url={video.id}
                 viewCount = {video.statistics.viewCount}
