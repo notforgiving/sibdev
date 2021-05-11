@@ -69,10 +69,10 @@ function Video({ pic, title, date, url, viewCount, channelTitle }: VideoProp) {
           {channelTitle}
         </Typography>
         <Typography color="textSecondary" className={styles.videoViewCount}>
-          {thousand
+          {thousand && !million
             ? `${Math.round(Number(viewCount) / 1000)} тыс. просмотров  `
             : ""}
-          {million
+          {million && thousand
             ? `${Math.round(Number(viewCount) / 1000000)} млн. просмотров  `
             : ""}
           {
