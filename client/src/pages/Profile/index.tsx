@@ -19,7 +19,7 @@ import { clearFavorites, getFavorites } from "../../redux/actions/favorites";
 import styles from "./style.module.css";
 import Alert from "@material-ui/lab/Alert";
 import { Snackbar } from "@material-ui/core";
-import { clearMessage } from "../../redux/actions/message";
+import VideoList from "../../components/VideoList";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -48,12 +48,10 @@ function Profile() {
 
   const handleChange = (event: ChangeEvent<{}>, newPage: number) => {
     setPage(newPage);
-    dispatch(clearMessage());
   };
 
   const handleLogOut = () => {
     dispatch(logOut());
-    dispatch(clearMessage());
     dispatch(clearFavorites());
   };
 
@@ -102,6 +100,7 @@ function Profile() {
             onChange={handleChangeSearch}
             modal={handleChangeVisableModal}
           />
+          <VideoList/>
         </TabPanel>
         <TabPanel value={page} index={1}>
           <Favorites />

@@ -5,6 +5,7 @@ import messageReducer from "./message";
 import loadingReducer from "./loading";
 import searchReducer from "./search";
 import favoritesReducer from "./favorites";
+import videoReducer from './video';
 
 const rootReducer = combineReducers({
   user: authorizationReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   search: searchReducer,
   favorites: favoritesReducer,
+  videos: videoReducer,
 });
 
 export default rootReducer;

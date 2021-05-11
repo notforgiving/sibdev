@@ -16,8 +16,11 @@ import { requestProp } from "./../../typing/request";
 
 import styles from "./style.module.css";
 import Confirm from "../Confirm";
+import { getVideos } from "../../redux/actions/video";
+import { useDispatch } from "react-redux";
 
 function Request({ name, text, value, sort, id }: requestProp) {
+  const dispatch = useDispatch()
   const sortTranslate = sortValues.filter((value) => value.text === sort);
   const [del, setDel] = useState(false);
   const [change, setChange] = useState(false);
@@ -30,13 +33,17 @@ function Request({ name, text, value, sort, id }: requestProp) {
     setChange(!change);
   };
 
+  const handleRunRequest = ()=>{
+    dispatch(getVideos({search:text,order:sort,maxResults:value}))
+  }
+
   return (
     <Card className={styles.requestBody}>
       <CardHeader title={name} subheader={text} />
       <CardActions disableSpacing className={styles.requestFooter}>
         <div className={styles.requestActions}>
           <Typography>{value} запросов </Typography>
-          <IconButton aria-label="run favorite">
+          <IconButton aria-label="run favorite" onClick={handleRunRequest}>
             <PlayArrowIcon fontSize="large" style={{ color: green[500] }} />
           </IconButton>
           <IconButton aria-label="change favorite" onClick={changeRequest}>

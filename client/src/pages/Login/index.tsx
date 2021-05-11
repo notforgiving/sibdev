@@ -10,8 +10,6 @@ import { red } from "@material-ui/core/colors";
 
 import { logIn, checkIn } from "./../../redux/actions/authorization";
 
-import { clearMessage } from "./../../redux/actions/message";
-
 import styles from "./style.module.css";
 
 function Login() {
@@ -28,9 +26,6 @@ function Login() {
 
   const handleChangeAction = () => {
     setLogin(!login);
-    if (errors.message) {
-      dispatch(clearMessage());
-    }
   };
 
   const onChangeUserLogin = (event: any) => {

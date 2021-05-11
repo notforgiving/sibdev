@@ -1,5 +1,6 @@
 {
   "serverPort": 5000,
   "dbUrl":"mongodb+srv://root:zVLXmcHNBPpa3LtV@cluster0.ebaqf.mongodb.net/Cluster0?retryWrites=true&w=majority",
-  "secretKey": "mern-secket-key"
+  "secretKey": "mern-secket-key",
+  "youtubeApiKey": "AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE"
 }
