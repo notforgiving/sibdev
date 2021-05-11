@@ -10,15 +10,18 @@ import { SearchProps } from "./../../typing/search";
 import styles from "./style.module.css";
 import { getVideos } from "../../redux/actions/video";
 import { useDispatch } from "react-redux";
+import { setSearchString } from "../../redux/actions/search";
 
 function Search({ search, onChange, modal }: SearchProps) {
   const dispatch = useDispatch();
   
   const handleRunSearch = () => {
-    dispatch(getVideos(search))
+    dispatch(setSearchString(search));
+    dispatch(getVideos({search}))
   };
+
   return (
-    <Paper component="form" className={styles.root}>
+    <Paper className={styles.root}>
       <InputBase
         className={styles.input}
         placeholder="Поиск видео"

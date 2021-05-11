@@ -21,6 +21,8 @@
 
 .videoViewCount{
   padding: 5px;
+  max-height: 30px;
+  overflow: hidden;
 }
 
 .videoChannelTitle{

@@ -5,12 +5,12 @@ import styles from "./style.module.css";
 
 function VideoList() {
   const { videos } = useSelector((state: any) => state);
-  console.log(videos, "videos");
+
   return (
     <div className={styles.videoList}>
       {videos
         ? videos.map((video: IVideo) => {
-            console.log(video, "video.id");
+
             return (
               <Video
                 key={video.id}

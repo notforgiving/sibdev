@@ -5,19 +5,22 @@ import axios from "axios";
 import { sortValues } from "./../../config/sorting";
 import { IVideosResult } from "../../typing/video";
 import { setLoaded, setLoading } from "../actions/loading";
+import { searchOptions } from "../../typing/search";
+import { setSearchString } from "../actions/search";
 
 const takeEvery: any = Eff.takeEvery;
 
 async function fetchGetStatistics(id: string) {
   const url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}&key=AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE`;
-  return axios.get(url).then(data=>{
-    return data.data.items[0]
+  return axios.get(url).then((data) => {
+    return data.data.items[0];
   });
 }
 
-async function fetchGetVideos(search: string) {
-  const videos = [];
-  const url = `https://youtube.googleapis.com/youtube/v3/search?maxResults=10&order=date&q=${search}&relevanceLanguage=ru&type=video&key=AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE`;
+async function fetchGetVideos({ search, order, maxResults }: searchOptions) {
+  const reultsValue = maxResults ? maxResults : "15";
+  const resultOrder = order ? order : "date";
+  const url = `https://youtube.googleapis.com/youtube/v3/search?maxResults=${reultsValue}&order=${resultOrder}&q=${search}&relevanceLanguage=ru&type=video&key=AIzaSyCUGOpgB7P9keOsl6LSvQbc4G033vXJFvE`;
   return await axios
     .get(url)
     .then((response) => {
@@ -28,17 +31,18 @@ async function fetchGetVideos(search: string) {
       );
     })
     .then((data) => {
-      return data
+      return data;
     })
     .catch((reject) => reject);
 }
 
-function* workerGetVideos({ payload }: { payload: string }) {
+function* workerGetVideos({ payload }: { payload: searchOptions }) {
+  console.log(payload, "payload");
   yield put(setLoading());
   const result: IVideosResult[] = yield call(fetchGetVideos, payload);
-  console.log(result,'result')
+  yield put(setSearchString(payload.search));
   yield put(setLoaded());
-  yield put(putVideos(result))
+  yield put(putVideos(result));
 }
 
 export function* watchGetVideos() {
