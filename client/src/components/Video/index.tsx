@@ -15,46 +15,87 @@ interface VideoProp {
   pic: string;
   title: string;
   description: string;
+  date: string;
+  url: string;
+  viewCount: string;
+  channelTitle: string;
 }
 
-function Video({ pic, title, description }: VideoProp) {
+function Video({
+  pic,
+  title,
+  description,
+  date,
+  url,
+  viewCount,
+  channelTitle,
+}: VideoProp) {
   const lengthTitle = 25;
-  const lengthDescription = 50;
   const corpTitle =
     title.length >= lengthTitle ? title.slice(0, lengthTitle) : title;
-  const corpDescription =
-    description.length >= lengthDescription
-      ? description.slice(0, lengthDescription)
-      : description;
+
+  const convertDate = (date: string): any => {
+    const now = Math.round(new Date().getTime()/1000.0);
+    const formatDate = Math.round(new Date(date).getTime()/1000.0);
+    const different = now-formatDate
+    const weeks =  {
+      value: Math.round(different / 604800),
+      text: 'недель'
+    };
+    const days = {
+      value: Math.round(different / 86400),
+      text: 'дней'
+    };
+    const hours = {
+      value: Math.round(different / 3600),
+      text: 'часов'
+    };
+    const minuts = {
+      value: Math.round(different / 60),
+      text: 'минут'
+
+    };
+    const seconds = {
+      value: Math.round(different),
+      text: 'секунд'
+
+    };
+    const result = [weeks,days,hours,minuts,seconds]
+    for (let i = 0; i < result.length; i++) {
+      if(result[i].value) {
+        return result[i];
+      }
+    }
+  };
+  
   return (
-    <Card className={styles.video}>
-      <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={title.length >= lengthTitle ? `${corpTitle}...` : corpTitle}
-        subheader="September 14, 2016"
-      />
-      <CardMedia image={pic} title="Paella dish" className={styles.videoPic} />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description.length >= lengthDescription
-            ? `${corpDescription}...`
-            : corpDescription}
+    <a
+      href={`https://youtu.be/${url}`}
+      target="_blank"
+      className={styles.video}
+    >
+      <Card>
+        <CardMedia
+          image={pic}
+          title="Paella dish"
+          className={styles.videoPic}
+        />
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          component="p"
+          className={styles.videoTitle}
+        >
+          {title.length >= lengthTitle ? `${corpTitle}...` : corpTitle}
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+        <Typography color="textSecondary" className={styles.videoChannelTitle}>
+          {channelTitle}
+        </Typography>
+        <Typography color="textSecondary" className={styles.videoViewCount}>
+          {viewCount} просмотров {convertDate(date).value} {convertDate(date).text} назад
+        </Typography>
+      </Card>
+    </a>
   );
 }
 

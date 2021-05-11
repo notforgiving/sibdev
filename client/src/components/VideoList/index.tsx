@@ -10,8 +10,19 @@ function VideoList() {
     <div className={styles.videoList}>
       {videos
         ? videos.map((video: IVideo) => {
-            console.log(video.snippet,'video.id')
-            return <Video key={video.id} pic={video.snippet.thumbnails.medium.url} title={video.snippet.title} description={video.snippet.description}/>;
+            console.log(video, "video.id");
+            return (
+              <Video
+                key={video.id}
+                pic={video.snippet.thumbnails.medium.url}
+                title={video.snippet.title}
+                description={video.snippet.description}
+                date = {video.snippet.publishedAt}
+                url={video.id}
+                viewCount = {video.statistics.viewCount}
+                channelTitle = {video.snippet.channelTitle}
+              />
+            );
           })
         : ""}
     </div>
